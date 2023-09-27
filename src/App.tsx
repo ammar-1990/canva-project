@@ -8,6 +8,7 @@ import OptionSide from "./components/OptionSide";
 import { ShapeComponent } from "../types";
 import TheComponent from "./components/TheComponent";
 import ComponentOptions from "./components/ComponentOptions";
+import { keyboardKey } from "@testing-library/user-event";
 
 function App() {
   type stateType = "shape" | "image" | "text";
@@ -21,6 +22,7 @@ function App() {
   const [resizing, setResizing] = useState(false);
   const [prevMouseX, setPrevMouseX] = useState(0);
   const [prevMouseY, setPrevMouseY] = useState(0);
+  const [copy, setCopy] = useState<ShapeComponent | null>(null)
 
   const clearImages = ()=>{
     setImages([])
@@ -223,6 +225,45 @@ setSelectedComponent(null)
 
   return ()=>document.removeEventListener('click',handleClick)
  },[])
+
+
+ useEffect(() => {
+  const handleKeyDown = (e:KeyboardEvent) => {
+    if (e.ctrlKey && e.key === 'c') {
+      e.preventDefault()
+      if(selectedComponent===null){
+        console.log('no')
+        setCopy(null)
+      }
+      else{
+        setCopy(selectedComponent)
+      }
+    
+    
+    }
+
+    if (e.ctrlKey && e.key === 'v') {
+      e.preventDefault()
+    
+      if(!copy) return null
+     
+     setComponents(prev=>[...prev,{...copy,id:Date.now(),top:10,left:10}])
+    }
+
+    if(e.key==='Delete'){
+
+      if(!selectedComponent) return null
+      setComponents(prev=>prev.filter(el=>el.id !== selectedComponent.id))
+      setSelectedComponent(null)
+    }
+  };
+
+  document.addEventListener('keydown', handleKeyDown);
+
+  return () => {
+    document.removeEventListener('keydown', handleKeyDown);
+  };
+}, [copy,selectedComponent]);
 
   return (
     <div className="h-screen w-full bg-zinc-900 flex items-center justify-center">
