@@ -123,6 +123,7 @@ const TheComponent = ({
         onMouseDown={handleMouseDown}
         onMouseMove={(e) => handleMouseMove(e, shape, width, height)}
         onMouseUp={handleMouseUp}
+      
         className={`cursor-nw-resize  group-hover:flex absolute bg-white w-5 h-5 rounded-full border border-blue-500 -bottom-2 -right-2 ${
           selectedId === id ? "flex " : "hidden"
         } `}
