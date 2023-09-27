@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { FaShapes } from "react-icons/fa";
 import { PiTextT } from "react-icons/pi";
+import { BsFillEraserFill } from "react-icons/bs";
 import { BsImages } from "react-icons/bs";
 import Button from "./components/Button";
 import OptionSide from "./components/OptionSide";
@@ -11,12 +12,11 @@ import ComponentOptions from "./components/ComponentOptions";
 function App() {
   type stateType = "shape" | "image" | "text";
 
-
-
   const [type, setType] = useState<stateType>("shape");
   const [images, setImages] = useState<string[] | []>([]);
   const [components, setComponents] = useState<ShapeComponent[] | []>([]);
-  const [selectedComponent, setSelectedComponent] = useState<ShapeComponent | null  >(null)
+  const [selectedComponent, setSelectedComponent] =
+    useState<ShapeComponent | null>(null);
 
   const [resizing, setResizing] = useState(false);
   const [prevMouseX, setPrevMouseX] = useState(0);
@@ -29,7 +29,12 @@ function App() {
     setPrevMouseY(e.clientY);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement,MouseEvent>,shape:ShapeComponent,width:number,height:number) => {
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    shape: ShapeComponent,
+    width: number,
+    height: number
+  ) => {
     if (!resizing) return;
 
     const dx = e.clientX - prevMouseX;
@@ -42,7 +47,7 @@ function App() {
       shape.width = updatedWidth;
       shape.height = updatedHeight;
       // Update the component's shape state or perform any necessary actions
-      const index = components.findIndex(el => el.id === shape.id);
+      const index = components.findIndex((el) => el.id === shape.id);
       const newComponents = [...components];
       newComponents[index] = shape;
       setComponents(newComponents);
@@ -56,25 +61,24 @@ function App() {
     setResizing(false);
   };
 
-
-const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
-  const index = components.findIndex(el => el.id === id);
+  const changeText = (id: number, e: ChangeEvent<HTMLInputElement>) => {
+    const index = components.findIndex((el) => el.id === id);
     const newComponents = [...components];
-    
+
     newComponents[index] = { ...newComponents[index], text: e.target.value };
-  
+
     setComponents(newComponents);
+  };
 
-
-}
-
-  const handleShapeDrag = (e: React.MouseEvent<HTMLDivElement>, shape: ShapeComponent,image:boolean) => {
-    if(image===true){
-      e.preventDefault()
+  const handleShapeDrag = (
+    e: React.MouseEvent<HTMLDivElement>,
+    shape: ShapeComponent,
+    image: boolean
+  ) => {
+    if (image === true) {
+      e.preventDefault();
     }
-   
-    
-    
+
     const initialX = e.clientX;
     const initialY = e.clientY;
     const shapeIndex = components.findIndex((s) => s.id === shape.id);
@@ -82,7 +86,7 @@ const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
     const handleMouseMove = (event: MouseEvent) => {
       const dx = event.clientX - initialX;
       const dy = event.clientY - initialY;
-      console.log('move')
+      console.log("move");
 
       setComponents((prevShapes) => {
         const updatedShapes = [...prevShapes];
@@ -92,69 +96,57 @@ const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
           top: shape.top + dy,
         };
 
-    
         return updatedShapes;
       });
     };
 
     const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
-  
-
-  const changeColor = (id:number,color:string)=>{
-    const index = components.findIndex(el => el.id === id);
+  const changeColor = (id: number, color: string) => {
+    const index = components.findIndex((el) => el.id === id);
     const newComponents = [...components];
     newComponents[index] = { ...newComponents[index], color: color };
     setComponents(newComponents);
-    setSelectedComponent({...newComponents[index],color:color})
-  }
-
+    setSelectedComponent({ ...newComponents[index], color: color });
+  };
 
   const changeWidth = (id: number, e: ChangeEvent<HTMLInputElement>) => {
-    const index = components.findIndex(el => el.id === id);
+    const index = components.findIndex((el) => el.id === id);
     const newComponents = [...components];
-    if(+e.target.value <=0) return
+    if (+e.target.value <= 0) return;
     newComponents[index] = { ...newComponents[index], width: +e.target.value };
-  
+
     setComponents(newComponents);
-    setSelectedComponent({...newComponents[index],width:+e.target.value})
-
-
+    setSelectedComponent({ ...newComponents[index], width: +e.target.value });
   };
   const changeHeight = (id: number, e: ChangeEvent<HTMLInputElement>) => {
-    const index = components.findIndex(el => el.id === id);
+    const index = components.findIndex((el) => el.id === id);
     const newComponents = [...components];
-    if(+e.target.value <=0) return
+    if (+e.target.value <= 0) return;
     newComponents[index] = { ...newComponents[index], height: +e.target.value };
-    
+
     setComponents(newComponents);
-    setSelectedComponent({...newComponents[index],height:+e.target.value})
-
-
+    setSelectedComponent({ ...newComponents[index], height: +e.target.value });
   };
 
-  const deleteComponent = (id:number)=>{
-    const newComponents = components.filter(el=>el.id !==id)
-  
-   
-   
-    setComponents(newComponents)
-  }
+  const deleteComponent = (id: number) => {
+    const newComponents = components.filter((el) => el.id !== id);
 
-  const selectComponent = (id:number)=>{
-   
-const selected = components.find(el=>el.id===id)
-if(selected)
-setSelectedComponent(selected)
-console.log(selectedComponent)
-  }
+    setComponents(newComponents);
+  };
+
+  const selectComponent = (id: number) => {
+    const selected = components.find((el) => el.id === id);
+    if (selected) setSelectedComponent(selected);
+    console.log(selectedComponent);
+  };
 
   const createComponent = (el: ShapeComponent) => {
     setComponents((prev) => [...prev, el]);
@@ -201,20 +193,16 @@ console.log(selectedComponent)
     },
   ];
 
-  
+  useEffect(() => {
+    if (selectedComponent) {
+      const check = components.find((el) => el.id === selectedComponent.id);
+      if (!check) {
+        setSelectedComponent(null);
+      }
+    }
+  }, [components, selectedComponent]);
 
-
-  useEffect(()=>{
-if(selectedComponent){
-  const check = components.find((el)=>el.id===selectedComponent.id)
-  if(!check){
-    setSelectedComponent(null)
-  }
-}
- 
-  },[components,selectedComponent])
-
-console.log(selectedComponent?.id)
+  console.log(selectedComponent?.id);
 
   return (
     <div className="h-screen w-full bg-zinc-900 flex items-center justify-center">
@@ -230,6 +218,16 @@ console.log(selectedComponent?.id)
                 type={type}
               />
             ))}
+
+            <button
+              title="clear canvas"
+              disabled={!components.length}
+              type="button"
+              className="w-10 h-10 flex items-center justify-center rounded-full disabled:bg-zinc-200 disabled:text-zinc-800 text-lg bg-rose-500 text-white hover:bg-rose-600 transition "
+              onClick={() => setComponents([])}
+            >
+              <BsFillEraserFill />
+            </button>
           </div>
 
           <OptionSide
@@ -240,14 +238,11 @@ console.log(selectedComponent?.id)
           />
         </div>
 
-        <div
-       
-          className="bg-white flex-1 rounded-md border-2 border-transparent relative hover:border-blue-500"
-        >
+        <div className="bg-white flex-1 rounded-md border-2 border-transparent relative hover:border-blue-500 overflow-hidden">
           {components.map((el) => (
             <TheComponent
-            shape={el }
-            id={el.id}
+              shape={el}
+              id={el.id}
               key={el.id}
               name={el.name}
               type={el.type}
@@ -266,17 +261,18 @@ console.log(selectedComponent?.id)
               handleMouseDown={handleMouseDown}
               handleMouseMove={handleMouseMove}
               handleMouseUp={handleMouseUp}
-             
-          
-
-              
             />
           ))}
         </div>
       </div>
-      {selectedComponent !==null   && <ComponentOptions changeColor={changeColor} changeHeight={changeHeight} changeWidth={changeWidth} selected={selectedComponent} />}
-
-     
+      {selectedComponent !== null && (
+        <ComponentOptions
+          changeColor={changeColor}
+          changeHeight={changeHeight}
+          changeWidth={changeWidth}
+          selected={selectedComponent}
+        />
+      )}
     </div>
   );
 }
