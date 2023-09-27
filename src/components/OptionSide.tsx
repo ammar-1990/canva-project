@@ -46,7 +46,7 @@ const OptionSide = ({ type, addImages, images, createComponent,clearImages }: Pr
                     src: el,
                   })
                 }
-                className="aspect-square object-content rounded-sm cursor-pointer hover:border-blue-500 border border-transparent"
+                className="aspect-square object-contain rounded-sm cursor-pointer hover:border-blue-500 border border-transparent"
                 src={el}
                 key={i}
                 alt="uploaded"
