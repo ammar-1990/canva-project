@@ -22,6 +22,10 @@ function App() {
   const [prevMouseX, setPrevMouseX] = useState(0);
   const [prevMouseY, setPrevMouseY] = useState(0);
 
+  const clearImages = ()=>{
+    setImages([])
+  }
+
   const handleMouseDown = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
     setResizing(true);
@@ -235,6 +239,8 @@ function App() {
             type={type}
             addImages={addImages}
             images={images}
+            clearImages={clearImages}
+            
           />
         </div>
 

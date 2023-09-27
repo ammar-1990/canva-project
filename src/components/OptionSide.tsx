@@ -8,9 +8,10 @@ type Props = {
   addImages: (e: ChangeEvent<HTMLInputElement>) => void;
   images: string[];
   createComponent: (el: ShapeComponent) => void;
+  clearImages:()=>void
 };
 
-const OptionSide = ({ type, addImages, images, createComponent }: Props) => {
+const OptionSide = ({ type, addImages, images, createComponent,clearImages }: Props) => {
   return (
     <div className="w-2/3 flex flex-col items-center">
       {type === "shape" && (
@@ -52,13 +53,18 @@ const OptionSide = ({ type, addImages, images, createComponent }: Props) => {
               />
             ))}
           </div>
+          <div className="mt-auto w-full flex items-center ">
           <label
             htmlFor="image"
-            className="w-[80%] mt-auto m-4 px-4 py-1 bg-blue-500 text-white rounded-sm flex items-center justify-center cursor-pointer hover:bg-blue-600 transition"
+            className="w-full mt-auto m-4 px-4 py-1 bg-blue-500 text-white rounded-sm flex items-center justify-center cursor-pointer hover:bg-blue-600 transition"
           >
             Upload Image
           </label>
+        
           <input type="file" multiple id="image" hidden onChange={addImages} />
+          </div>
+       
+          <button disabled={!images.length} onClick={clearImages} className="w-[85%] mb-4 px-4 py-1 disabled:bg-zinc-200 disabled:text-zinc-800 bg-rose-500 text-white rounded-sm flex items-center justify-center  hover:bg-rose-600 transition">Clear Images</button>
         </div>
       )}
     </div>
