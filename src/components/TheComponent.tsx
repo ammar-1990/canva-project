@@ -12,6 +12,7 @@ type Props = {
   text?:string,
   width: number;
   height: number;
+
   color: string;
   deleteComponent: (id: number) => void;
   selectComponent:(id:number)=>void,
@@ -37,7 +38,7 @@ const TheComponent = ({
   selectedId,
   handleShapeDrag,
   text,
-  changeText
+  changeText,
   
 }: Props) => {
   let theShape;
@@ -52,7 +53,7 @@ const image= type==='image'? true : false
     <div
     onMouseDown={(e) => handleShapeDrag(e, shape,image)}
    data-com='com'
-      className={` hover:border-blue-500  rounded-sm  border-2 group ${selectedId===id ? 'border-blue-500' : 'border-transparent'}  `}
+      className={` hover:border-blue-500  rounded-sm  border-2 group ${selectedId===id ? 'border-blue-500' : 'border-transparent'} cursor-move  `}
       style={{ position: "absolute", top:`${top}px`, left:`${left}px`, width:`${width}px`, height:`${height}px` }}
       onClick={()=>selectComponent(id)}
     >
@@ -79,7 +80,7 @@ const image= type==='image'? true : false
       <input
       type="text"
       style={{color}}
-      className="w-full h-full outline-none resize-none text-7xl text-center border-dashed border-2 border-blue-400" value={text} onChange={(e)=>{changeText(id,e)}} />}
+      className="w-full h-full outline-none resize-none text-7xl text-center border-dashed border-2 cursor-move border-blue-400" value={text} onChange={(e)=>{changeText(id,e)}} />}
 
       <span
         onClick={() => deleteComponent(id)}

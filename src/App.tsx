@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useRef, useEffect } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { FaShapes } from "react-icons/fa";
 import { PiTextT } from "react-icons/pi";
 import { BsImages } from "react-icons/bs";
@@ -11,7 +11,7 @@ import ComponentOptions from "./components/ComponentOptions";
 function App() {
   type stateType = "shape" | "image" | "text";
 
-  const canvasDivRef = useRef<HTMLDivElement | null>(null);
+
 
   const [type, setType] = useState<stateType>("shape");
   const [images, setImages] = useState<string[] | []>([]);
@@ -111,6 +111,7 @@ const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
   }
 
   const selectComponent = (id:number)=>{
+   
 const selected = components.find(el=>el.id===id)
 if(selected)
 setSelectedComponent(selected)
@@ -162,24 +163,7 @@ console.log(selectedComponent)
     },
   ];
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-   
-    };
-
-   
-
-    canvasDivRef.current?.addEventListener("mousemove", handler);
-
-   
-
-    return () =>{
-     
-      canvasDivRef.current?.removeEventListener("mousemove", handler);
-    }
   
-     
-  }, []);
 
 
   useEffect(()=>{
@@ -219,7 +203,7 @@ console.log(selectedComponent?.id)
         </div>
 
         <div
-          ref={canvasDivRef}
+       
           className="bg-white flex-1 rounded-md border-2 border-transparent relative hover:border-blue-500"
         >
           {components.map((el) => (
@@ -241,6 +225,7 @@ console.log(selectedComponent?.id)
               changeText={changeText}
               handleShapeDrag={handleShapeDrag}
               text={el.text}
+             
           
 
               
