@@ -2,24 +2,35 @@ import { FaTrash } from "react-icons/fa";
 import { ShapeComponent } from "../../types";
 
 type Props = {
-  shape:ShapeComponent
+  shape: ShapeComponent;
   id: number;
   type: "shape" | "image" | "text";
-  src?:string,
+  src?: string;
   name?: "rect" | "circle" | "triangle";
   top: number;
   left: number;
-  text?:string,
+  text?: string;
   width: number;
   height: number;
+  handleMouseDown: (e: React.MouseEvent<HTMLSpanElement>) => void;
+  handleMouseMove: (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    shape: ShapeComponent,
+    width: number,
+    height: number
+  ) => void;
+  handleMouseUp: () => void;
 
   color: string;
   deleteComponent: (id: number) => void;
-  selectComponent:(id:number)=>void,
-  selectedId?:number,
-  handleShapeDrag:(e: React.MouseEvent<HTMLDivElement>, shape: ShapeComponent,image:boolean)=>void,
-  changeText:(id:number,e:React.ChangeEvent<HTMLInputElement>)=>void
-
+  selectComponent: (id: number) => void;
+  selectedId?: number;
+  handleShapeDrag: (
+    e: React.MouseEvent<HTMLDivElement>,
+    shape: ShapeComponent,
+    image: boolean
+  ) => void;
+  changeText: (id: number, e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const TheComponent = ({
@@ -39,23 +50,33 @@ const TheComponent = ({
   handleShapeDrag,
   text,
   changeText,
-  
+  handleMouseDown,
+  handleMouseMove,
+  handleMouseUp,
 }: Props) => {
   let theShape;
 
   if (type === "shape") {
     theShape = name;
   }
-console.log(src)
+  console.log(src);
 
-const image= type==='image'? true : false
+  const image = type === "image" ? true : false;
   return (
     <div
-    onMouseDown={(e) => handleShapeDrag(e, shape,image)}
-   data-com='com'
-      className={` hover:border-blue-500  rounded-sm  border-2 group ${selectedId===id ? 'border-blue-500' : 'border-transparent'} cursor-move  `}
-      style={{ position: "absolute", top:`${top}px`, left:`${left}px`, width:`${width}px`, height:`${height}px` }}
-      onClick={()=>selectComponent(id)}
+      onMouseDown={(e) => handleShapeDrag(e, shape, image)}
+      data-com="com"
+      className={` hover:border-blue-500  rounded-sm  border-2 group ${
+        selectedId === id ? "border-blue-500" : "border-transparent"
+      } cursor-move  `}
+      style={{
+        position: "absolute",
+        top: `${top}px`,
+        left: `${left}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
+      onClick={() => selectComponent(id)}
     >
       {theShape && (
         <div
@@ -70,17 +91,25 @@ const image= type==='image'? true : false
         ></div>
       )}
 
+      {type === "image" && (
+        <img
+          src={src}
+          alt="setImage"
+          className="w-full h-full object-content"
+        />
+      )}
 
-      {
-        
-        type==='image' && <img src={src} alt="setImage" className="w-full h-full object-content"  />
-      }
-
-      {type==='text' && 
-      <input
-      type="text"
-      style={{color}}
-      className="w-full h-full outline-none resize-none text-7xl text-center border-dashed border-2 cursor-move border-blue-400" value={text} onChange={(e)=>{changeText(id,e)}} />}
+      {type === "text" && (
+        <input
+          type="text"
+          style={{ color }}
+          className="w-full h-full outline-none resize-none text-7xl text-center border-dashed border-2 cursor-move border-blue-400"
+          value={text}
+          onChange={(e) => {
+            changeText(id, e);
+          }}
+        />
+      )}
 
       <span
         onClick={() => deleteComponent(id)}
@@ -88,6 +117,15 @@ const image= type==='image'? true : false
       >
         <FaTrash />
       </span>
+
+      <span
+        onMouseDown={handleMouseDown}
+        onMouseMove={(e) => handleMouseMove(e, shape, width, height)}
+        onMouseUp={handleMouseUp}
+        className={`cursor-nw-resize  group-hover:flex absolute bg-white w-5 h-5 rounded-full border border-blue-500 -bottom-2 -right-2 ${
+          selectedId === id ? "flex " : "hidden"
+        } `}
+      ></span>
     </div>
   );
 };

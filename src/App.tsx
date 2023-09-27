@@ -18,6 +18,44 @@ function App() {
   const [components, setComponents] = useState<ShapeComponent[] | []>([]);
   const [selectedComponent, setSelectedComponent] = useState<ShapeComponent | null  >(null)
 
+  const [resizing, setResizing] = useState(false);
+  const [prevMouseX, setPrevMouseX] = useState(0);
+  const [prevMouseY, setPrevMouseY] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    setResizing(true);
+    setPrevMouseX(e.clientX);
+    setPrevMouseY(e.clientY);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement,MouseEvent>,shape:ShapeComponent,width:number,height:number) => {
+    if (!resizing) return;
+
+    const dx = e.clientX - prevMouseX;
+    const dy = e.clientY - prevMouseY;
+
+    const updatedWidth = width + dx;
+    const updatedHeight = height + dy;
+
+    if (updatedWidth > 0 && updatedHeight > 0) {
+      shape.width = updatedWidth;
+      shape.height = updatedHeight;
+      // Update the component's shape state or perform any necessary actions
+      const index = components.findIndex(el => el.id === shape.id);
+      const newComponents = [...components];
+      newComponents[index] = shape;
+      setComponents(newComponents);
+    }
+
+    setPrevMouseX(e.clientX);
+    setPrevMouseY(e.clientY);
+  };
+
+  const handleMouseUp = () => {
+    setResizing(false);
+  };
+
 
 const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
   const index = components.findIndex(el => el.id === id);
@@ -225,6 +263,9 @@ console.log(selectedComponent?.id)
               changeText={changeText}
               handleShapeDrag={handleShapeDrag}
               text={el.text}
+              handleMouseDown={handleMouseDown}
+              handleMouseMove={handleMouseMove}
+              handleMouseUp={handleMouseUp}
              
           
 
@@ -234,6 +275,8 @@ console.log(selectedComponent?.id)
         </div>
       </div>
       {selectedComponent !==null   && <ComponentOptions changeColor={changeColor} changeHeight={changeHeight} changeWidth={changeWidth} selected={selectedComponent} />}
+
+     
     </div>
   );
 }
