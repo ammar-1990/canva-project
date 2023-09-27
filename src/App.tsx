@@ -154,7 +154,6 @@ function App() {
 
   const createComponent = (el: ShapeComponent) => {
     setComponents((prev) => [...prev, el]);
-    const element = components[components.length-1]
 setSelectedComponent(el)
   };
 
@@ -207,7 +206,23 @@ setSelectedComponent(el)
     }
   }, [components, selectedComponent]);
 
- 
+
+ useEffect(()=>{
+
+  const handleClick = (e:MouseEvent)=>{
+    e.stopPropagation()
+    const target = e.target as HTMLElement
+  
+      if(target && target.hasAttribute('data-com')){
+setSelectedComponent(null)
+      }
+    
+  }
+
+  document.addEventListener('click',handleClick)
+
+  return ()=>document.removeEventListener('click',handleClick)
+ },[])
 
   return (
     <div className="h-screen w-full bg-zinc-900 flex items-center justify-center">
@@ -245,7 +260,9 @@ setSelectedComponent(el)
           />
         </div>
 
-        <div className="bg-white flex-1 rounded-md border-2 border-transparent relative hover:border-blue-500 overflow-hidden">
+        <div
+        data-com='com'
+        className="bg-white flex-1 rounded-md border-2 border-transparent relative hover:border-blue-500 overflow-hidden">
           {components.map((el) => (
             <TheComponent
               shape={el}
@@ -268,6 +285,7 @@ setSelectedComponent(el)
               handleMouseDown={handleMouseDown}
               handleMouseMove={handleMouseMove}
               handleMouseUp={handleMouseUp}
+              
             />
           ))}
         </div>

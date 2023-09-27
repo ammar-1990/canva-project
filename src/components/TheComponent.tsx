@@ -31,6 +31,7 @@ type Props = {
     image: boolean
   ) => void;
   changeText: (id: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+
 };
 
 const TheComponent = ({
@@ -53,6 +54,7 @@ const TheComponent = ({
   handleMouseDown,
   handleMouseMove,
   handleMouseUp,
+
 }: Props) => {
   let theShape;
 
@@ -64,8 +66,8 @@ const TheComponent = ({
   const image = type === "image" ? true : false;
   return (
     <div
+
       onMouseDown={(e) => handleShapeDrag(e, shape, image)}
-      data-com="com"
       className={` hover:border-blue-500  rounded-sm  border-2 group ${
         selectedId === id ? "border-blue-500" : "border-transparent"
       } cursor-move  `}
