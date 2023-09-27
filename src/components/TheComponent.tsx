@@ -59,7 +59,7 @@ const TheComponent = ({
   if (type === "shape") {
     theShape = name;
   }
-  console.log(src);
+
 
   const image = type === "image" ? true : false;
   return (
@@ -102,8 +102,9 @@ const TheComponent = ({
       {type === "text" && (
         <input
           type="text"
+          placeholder="Write a text"
           style={{ color }}
-          className="w-full h-full outline-none resize-none text-7xl text-center border-dashed border-2 cursor-move border-blue-400"
+          className="w-full h-full outline-none bg-transparent text-7xl text-center cursor-move break-words placeholder:uppercase overflow-hidden  "
           value={text}
           onChange={(e) => {
             changeText(id, e);

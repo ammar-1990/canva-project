@@ -90,7 +90,7 @@ function App() {
     const handleMouseMove = (event: MouseEvent) => {
       const dx = event.clientX - initialX;
       const dy = event.clientY - initialY;
-      console.log("move");
+   
 
       setComponents((prevShapes) => {
         const updatedShapes = [...prevShapes];
@@ -149,12 +149,13 @@ function App() {
   const selectComponent = (id: number) => {
     const selected = components.find((el) => el.id === id);
     if (selected) setSelectedComponent(selected);
-    console.log(selectedComponent);
+
   };
 
   const createComponent = (el: ShapeComponent) => {
     setComponents((prev) => [...prev, el]);
-    console.log(components);
+    const element = components[components.length-1]
+setSelectedComponent(el)
   };
 
   const addImages = (e: ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +171,7 @@ function App() {
 
           if (imagesArray.length === files.length) {
             setImages((prev) => [...prev, ...imagesArray]);
-            console.log(images);
+           
           }
         };
 
@@ -206,7 +207,7 @@ function App() {
     }
   }, [components, selectedComponent]);
 
-  console.log(selectedComponent?.id);
+ 
 
   return (
     <div className="h-screen w-full bg-zinc-900 flex items-center justify-center">

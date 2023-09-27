@@ -23,7 +23,7 @@ const OptionSide = ({ type, addImages, images, createComponent,clearImages }: Pr
       )}
 
       {type === "text" && (
-        <div onClick={()=>createComponent({type:'text',color:'black',height:200,width:600,id:Date.now(),left:200,top:200,text:'write a new text'})} className="cursor-pointer rounded-md  flex flex-col items-center mt-5 p-5  transition text-zinc-200 w-[80%] hover:bg-zinc-300 bg-zinc-600 hover:text-zinc-800">
+        <div onClick={()=>createComponent({type:'text',color:'black',height:200,width:600,id:Date.now(),left:200,top:200,text:''})} className="cursor-pointer rounded-md  flex flex-col items-center mt-5 p-5  transition text-zinc-200 w-[80%] hover:bg-zinc-300 bg-zinc-600 hover:text-zinc-800">
           <RxText size={50} />
           <p>Add Text</p>
         </div>
