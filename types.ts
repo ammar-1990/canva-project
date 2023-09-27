@@ -5,8 +5,10 @@ export type ShapeComponent ={
     name?:'rect' | 'circle' | 'triangle',
     top:number,
     left:number,
+    text?:string
     width:number,
     height:number,
-    color:string
+    color:string,
+    src?:string,
   
   }

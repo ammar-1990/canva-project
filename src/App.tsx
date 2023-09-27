@@ -19,9 +19,23 @@ function App() {
   const [selectedComponent, setSelectedComponent] = useState<ShapeComponent | null  >(null)
 
 
-  const handleShapeDrag = (e: React.MouseEvent<HTMLDivElement>, shape: ShapeComponent) => {
-    e.preventDefault();
-    console.log('work')
+const changeText=(id:number,e:ChangeEvent<HTMLInputElement>)=>{
+  const index = components.findIndex(el => el.id === id);
+    const newComponents = [...components];
+    
+    newComponents[index] = { ...newComponents[index], text: e.target.value };
+  
+    setComponents(newComponents);
+
+
+}
+
+  const handleShapeDrag = (e: React.MouseEvent<HTMLDivElement>, shape: ShapeComponent,image:boolean) => {
+    if(image===true){
+      e.preventDefault()
+    }
+   
+    
     
     const initialX = e.clientX;
     const initialY = e.clientY;
@@ -40,7 +54,7 @@ function App() {
           top: shape.top + dy,
         };
 
-        console.log(updatedShapes[shapeIndex])
+    
         return updatedShapes;
       });
     };
@@ -215,6 +229,7 @@ console.log(selectedComponent?.id)
               key={el.id}
               name={el.name}
               type={el.type}
+              src={el.src}
               color={el.color}
               height={el.height}
               width={el.width}
@@ -223,7 +238,9 @@ console.log(selectedComponent?.id)
               deleteComponent={deleteComponent}
               selectComponent={selectComponent}
               selectedId={selectedComponent?.id}
+              changeText={changeText}
               handleShapeDrag={handleShapeDrag}
+              text={el.text}
           
 
               
