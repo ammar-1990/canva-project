@@ -19,7 +19,7 @@ const Button = ({name,Icon,onClick,type}: Props) => {
     }  ${type === name && "bg-zinc-700"} `}
   >
     <Icon />
-    <p className="cursor-pointer capitalize">{name}</p>
+    <p className="cursor-pointer capitalize text-xs">{name}</p>
   </button>
   )
 }

@@ -2,16 +2,17 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { FaShapes } from "react-icons/fa";
 import { PiTextT } from "react-icons/pi";
 import { BsFillEraserFill } from "react-icons/bs";
+import { IoLayersSharp } from "react-icons/io5";
 import { BsImages } from "react-icons/bs";
 import Button from "./components/Button";
 import OptionSide from "./components/OptionSide";
 import { ShapeComponent } from "../types";
 import TheComponent from "./components/TheComponent";
 import ComponentOptions from "./components/ComponentOptions";
-import { keyboardKey } from "@testing-library/user-event";
+
 
 function App() {
-  type stateType = "shape" | "image" | "text";
+  type stateType = "shape" | "image" | "text" | "components";
 
   const [type, setType] = useState<stateType>("shape");
   const [images, setImages] = useState<string[] | []>([]);
@@ -197,6 +198,11 @@ setSelectedComponent(el)
       Icon: BsImages,
       onClick: () => setType("image"),
     },
+    {
+      name: "components",
+      Icon: IoLayersSharp,
+      onClick: () => setType("components"),
+    },
   ];
 
   useEffect(() => {
@@ -297,6 +303,10 @@ setSelectedComponent(null)
             addImages={addImages}
             images={images}
             clearImages={clearImages}
+            components={components}
+            selectComponent={selectComponent}
+            selectedId={selectedComponent?.id}
+            deleteComponent={deleteComponent}
             
           />
         </div>
