@@ -212,6 +212,9 @@ const OptionSide = ({
                   alt="component"
                 />
               )}
+              {
+                el.type==='text' && <p style={{color:el.color}}>{el.text}</p>
+              }
             </div>
           ))}
         </div>
