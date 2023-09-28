@@ -240,6 +240,7 @@ setSelectedComponent(null)
  useEffect(() => {
   const handleKeyDown = (e:KeyboardEvent) => {
     if (e.ctrlKey && e.key === 'c') {
+      
       e.preventDefault()
       if(selectedComponent===null){
         console.log('no')

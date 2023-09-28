@@ -132,7 +132,9 @@ const OptionSide = ({
             </div>
           ) : (
             <div className="bg-zinc-300 flex flex-col w-full h-full items-center">
+                 {!images.length && <p className="w-full text-xs text-center text-zinc-800">No images uploaded</p>}
               <div className=" grid grid-cols-2 p-1 gap-1 mb-5 scroll overflow-y-auto ">
+             
                 {images.map((el, i) => (
                   <img
                     onClick={() =>
