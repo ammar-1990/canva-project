@@ -384,7 +384,7 @@ setSelectedComponent(null)
                 <p style={{ color: copy.color }}>{copy.text}</p>
               )}
             </div>
-            <button onClick={()=>{setComponents(prev=>[...prev,{...copy,id:Date.now(),top:10,left:10}])}} className="bg-blue-500 p-1 rounded-md text-white hover:bg-blue-600 transition">
+            <button onClick={()=>{setComponents(prev=>[...prev,{...copy,id:Date.now(),top:10,left:10}])}} className="bg-blue-500 p-1 rounded-md text-white hover:bg-blue-600 text-sm px-2 transition">
               Paste to canvas
             </button>
         </div>
