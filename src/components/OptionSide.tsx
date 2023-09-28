@@ -52,7 +52,7 @@ const OptionSide = ({
   ];
 
   const [figures, setFigures] = useState(true);
-  const [collection, setCollection] = useState<string[]>(theCollection);
+  const [collection] = useState<string[]>(theCollection);
   console.log(collection);
   return (
     <div className="w-2/3 flex flex-col items-center">
@@ -87,7 +87,7 @@ const OptionSide = ({
 
       {type === "image" && (
         <>
-          <div className="flex items-center w-full p-3 bg-zinc-300 ">
+          <div className="flex items-center w-full p-3 bg-zinc-300  ">
             <button
               onClick={() => setFigures(false)}
               className={`p-1 flex-1   rounded-md bg-blue-500 text-white border-2 hover:bg-blue-600 transition ${
@@ -133,7 +133,7 @@ const OptionSide = ({
           ) : (
             <div className="bg-zinc-300 flex flex-col w-full h-full items-center">
                  {!images.length && <p className="w-full text-xs text-center text-zinc-800">No images uploaded</p>}
-              <div className=" grid grid-cols-2 p-1 gap-1 mb-5 scroll overflow-y-auto ">
+              <div className=" grid grid-cols-2 p-1 gap-1 scroll overflow-y-auto h-[400px] ">
              
                 {images.map((el, i) => (
                   <img
@@ -156,6 +156,7 @@ const OptionSide = ({
                   />
                 ))}
               </div>
+              <div className="flex flex-col items-center w-full mt-auto">
               <div className="mt-auto w-full flex items-center ">
                 <label
                   htmlFor="image"
@@ -180,6 +181,8 @@ const OptionSide = ({
               >
                 Clear Images
               </button>
+              </div>
+             
             </div>
           )}
         </>
