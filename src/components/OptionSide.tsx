@@ -1,5 +1,6 @@
 import { RxText } from "react-icons/rx";
 import { IoMdTrash } from "react-icons/io";
+import { BiCopy } from "react-icons/bi";
 import SingleShape from "./SingleShape";
 import { ChangeEvent, useState } from "react";
 import { ShapeComponent } from "../../types";
@@ -12,8 +13,9 @@ type Props = {
   clearImages: () => void;
   components: ShapeComponent[];
   selectComponent: (id: number) => void;
-  selectedId:number|undefined,
-  deleteComponent:(id:number)=>void
+  selectedId: number | undefined;
+  deleteComponent: (id: number) => void;
+  copyComponent: (el: ShapeComponent) => void;
 };
 
 const OptionSide = ({
@@ -25,7 +27,8 @@ const OptionSide = ({
   selectComponent,
   components,
   selectedId,
-  deleteComponent
+  deleteComponent,
+  copyComponent
 }: Props) => {
   // eslint-disable-next-line no-octal-escape
   const theCollection = [
@@ -182,14 +185,32 @@ const OptionSide = ({
 
       {type === "components" && (
         <div className="flex flex-col items-center p-1 w-full h-full overflow-y-auto scroll gap-y-1">
-          {!components.length && <p className="text-xs text-zinc-400 w-[80%] text-center p-4">No components added to canvas</p>}
+          {!components.length && (
+            <p className="text-xs text-zinc-400 w-[80%] text-center p-4">
+              No components added to canvas
+            </p>
+          )}
           {components.map((el) => (
             <div
               onClick={() => selectComponent(el.id)}
-              className={`flex items-center justify-center group w-full aspect-square border-2 flex-shrink-0  relative ${selectedId===el.id ? 'border-blue-500': 'border-transparent'} bg-white border hover:border-blue-500 rounded-md`}
+              className={`flex items-center justify-center group w-full aspect-square border-2 flex-shrink-0  relative ${
+                selectedId === el.id ? "border-blue-500" : "border-transparent"
+              } bg-white border hover:border-blue-500 rounded-md`}
             >
-              <span onClick={()=>deleteComponent(el.id)} className="absolute top-2 left-2 hidden group-hover:flex items-center justify-center w-5 h-5 text-xl cursor-pointer text-rose-500">
+              <span
+                title="delete"
+                onClick={() => deleteComponent(el.id)}
+                className="absolute top-2 left-2 hidden group-hover:flex items-center justify-center w-5 h-5 text-xl cursor-pointer text-rose-500"
+              >
                 <IoMdTrash />
+              </span>
+              <span
+
+                title="copy"
+                onClick={() => copyComponent(el)}
+                className="absolute top-2 left-8 hidden group-hover:flex items-center justify-center w-5 h-5 text-md cursor-pointer bg-zinc-200 rounded-md  text-zinc-700"
+              >
+                <BiCopy />
               </span>
               {el.type === "shape" && (
                 <div
@@ -212,9 +233,9 @@ const OptionSide = ({
                   alt="component"
                 />
               )}
-              {
-                el.type==='text' && <p style={{color:el.color}}>{el.text}</p>
-              }
+              {el.type === "text" && (
+                <p style={{ color: el.color }}>{el.text}</p>
+              )}
             </div>
           ))}
         </div>

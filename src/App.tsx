@@ -68,6 +68,10 @@ function App() {
     setResizing(false);
   };
 
+  const copyComponent = (el:ShapeComponent)=>{
+    setCopy(el)
+  }
+
   const changeText = (id: number, e: ChangeEvent<HTMLInputElement>) => {
     const index = components.findIndex((el) => el.id === id);
     const newComponents = [...components];
@@ -307,6 +311,7 @@ setSelectedComponent(null)
             selectComponent={selectComponent}
             selectedId={selectedComponent?.id}
             deleteComponent={deleteComponent}
+            copyComponent={copyComponent}
             
           />
         </div>
@@ -349,6 +354,40 @@ setSelectedComponent(null)
           selected={selectedComponent}
         />
       )}
+      {
+        copy && <div className="flex items-center flex-col gap-1 justify-center fixed right-0 top-[350px] w-[150px]  bg-zinc-600 py-2 px-1 rounded-l-lg">
+          <p className="text-white ">Copied</p>
+<div className="flex items-center justify-center w-full bg-white p-5 rounded-lg">
+            {copy.type === "shape" && (
+<div
+                  style={{
+                    width: `100px`,
+                    height: `100px`,
+                    backgroundColor: copy.color,
+                    clipPath:
+                      copy.name === "triangle"
+                        ? "polygon(50% 0%, 0% 100%, 100% 100%)"
+                        : "",
+                  }}
+                  className={`${copy.name === "circle" && "rounded-full"}`}
+                ></div>
+              )}
+              {copy.type === "image" && (
+                <img
+                  src={copy.src}
+                  className="w-[100px] h-[100px] object-contain "
+                  alt="component"
+                />
+              )}
+              {copy.type === "text" && (
+                <p style={{ color: copy.color }}>{copy.text}</p>
+              )}
+            </div>
+            <button onClick={()=>{setComponents(prev=>[...prev,{...copy,id:Date.now(),top:10,left:10}])}} className="bg-blue-500 p-1 rounded-md text-white hover:bg-blue-600 transition">
+              Paste to canvas
+            </button>
+        </div>
+      }
     </div>
   );
 }
